@@ -24,23 +24,26 @@ public class ReentrantLockAndCondition {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+//            lock.unlock();
             while (true){}
 //            lock.unlock();
         });
         thread.start();
 
         Thread thread1 = new Thread(() -> {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(10);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             lock.lock();
             System.out.println("子线程获得锁");
             while (true) {
             }
         });
         thread1.start();
+        Thread.sleep(500);
+        System.out.println("thread1 唤醒");
         thread1.interrupt();
         Thread thread2 = new Thread(() -> {
             lock.lock();
@@ -48,7 +51,7 @@ public class ReentrantLockAndCondition {
             while (true) {
             }
         });
-        Thread.sleep(2000);
+        while (true){}
 //        thread2.start();
 
 
