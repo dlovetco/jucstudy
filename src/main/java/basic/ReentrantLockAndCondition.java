@@ -13,47 +13,40 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ReentrantLockAndCondition {
 
     public static void main(String[] args) throws InterruptedException {
-        ReentrantLock lock = new ReentrantLock();
+        ReentrantLock lock = new ReentrantLock(true);
         Condition condition = lock.newCondition();
 
         Thread thread = new Thread(() -> {
             lock.lock();
-            System.out.println("子线程获得锁");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 //            lock.unlock();
-            while (true){}
-//            lock.unlock();
-        });
-        thread.start();
-
-        Thread thread1 = new Thread(() -> {
 //            try {
-//                Thread.sleep(10);
+//                Thread.sleep(1000);
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
+//            lock.unlock();
+//            lock.lock();
+            while (true){
+
+            }
+        });
+        thread.start();
+        Thread thread1 = new Thread(() -> {
             lock.lock();
-            System.out.println("子线程获得锁");
             while (true) {
             }
         });
         thread1.start();
-        Thread.sleep(500);
-        System.out.println("thread1 唤醒");
-        thread1.interrupt();
+//        Thread.sleep(100);
+//        thread1.interrupt();
         Thread thread2 = new Thread(() -> {
             lock.lock();
-            System.out.println("子线程获得锁");
             while (true) {
             }
         });
-        while (true){}
-//        thread2.start();
+        thread2.start();
+        while (true) {
 
-
+        }
     }
 }
