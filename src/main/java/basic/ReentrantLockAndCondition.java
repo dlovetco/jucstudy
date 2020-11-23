@@ -1,6 +1,5 @@
 package basic;
 
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -13,40 +12,22 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ReentrantLockAndCondition {
 
     public static void main(String[] args) throws InterruptedException {
-        ReentrantLock lock = new ReentrantLock(true);
-        Condition condition = lock.newCondition();
-
-        Thread thread = new Thread(() -> {
+        ReentrantLock lock = new ReentrantLock();
+        new Thread(() -> {
             lock.lock();
-//            lock.unlock();
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            lock.unlock();
-//            lock.lock();
-            while (true){
-
+            System.out.println("11123");
+            try {
+                Thread.sleep(500);
+                System.out.println("结束sleep");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
-        thread.start();
-        Thread thread1 = new Thread(() -> {
+        }).start();
+        new Thread(() -> {
+            System.out.println("线程2开始抢锁");
             lock.lock();
-            while (true) {
-            }
-        });
-        thread1.start();
-//        Thread.sleep(100);
-//        thread1.interrupt();
-        Thread thread2 = new Thread(() -> {
-            lock.lock();
-            while (true) {
-            }
-        });
-        thread2.start();
-        while (true) {
-
-        }
+            System.out.println("9999");
+        }).start();
+        System.out.println(123);
     }
 }
