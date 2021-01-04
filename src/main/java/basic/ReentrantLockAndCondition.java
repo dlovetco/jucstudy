@@ -12,22 +12,36 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ReentrantLockAndCondition {
 
     public static void main(String[] args) throws InterruptedException {
-        ReentrantLock lock = new ReentrantLock();
+        case2();
+    }
+
+    /**
+     * 重入锁主要流程
+     */
+    public static void case1() {
+        ReentrantLock reentrantLock = new ReentrantLock();
+        //加锁
+        reentrantLock.lock();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            //释放锁
+            reentrantLock.unlock();
+        }
+    }
+
+    /**
+     * unlock异常
+     */
+    public static void case2() {
+        ReentrantLock reentrantLock = new ReentrantLock();
+        //加锁
+        reentrantLock.lock();
         new Thread(() -> {
-            lock.lock();
-            System.out.println("11123");
-            try {
-                Thread.sleep(500);
-                System.out.println("结束sleep");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            //会抛出异常 执行unlock的线程必须当前拥有锁
+            reentrantLock.unlock();
         }).start();
-        new Thread(() -> {
-            System.out.println("线程2开始抢锁");
-            lock.lock();
-            System.out.println("9999");
-        }).start();
-        System.out.println(123);
     }
 }
